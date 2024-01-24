@@ -47,8 +47,8 @@ char	*ft_getline(char *dst)
 		return (NULL);
 	while (dst[i] && dst[i] != '\n')
 		i++;
- if (dst[i] == '\n')
-  i++;
+	if (dst[i] == '\n')
+	  i++;
 	ret = malloc(sizeof(char) * (i + 1));
 	if (!ret)
 		return (NULL);
@@ -81,8 +81,8 @@ char	*ft_getleft(char *dst)
 		free(dst);
 		return (NULL);
 	}
- if (dst[i] == '\n')
-  i++
+	if (dst[i] == '\n')
+	  i++;
 	ret = malloc(sizeof(char) * (ft_strlen(dst) - i + 1));
 	if (!ret)
 		return (NULL);
