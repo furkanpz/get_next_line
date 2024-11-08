@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fuyar <fuyar@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/08 16:44:23 by fuyar             #+#    #+#             */
+/*   Updated: 2024/11/08 16:53:28 by fuyar            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-char *ft_read_line(char *buf, int fd)
+char	*ft_read_line(char *buf, int fd)
 {
-	char *buffer;
-	int reads;
+	char	*buffer;
+	int		reads;
 
 	reads = 1;
 	if (!buf)
@@ -15,7 +27,7 @@ char *ft_read_line(char *buf, int fd)
 	}
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
-		return (NULL);
+		return (free(buf), NULL);
 	while (!ft_strchr_gnl(buf, '\n') && reads != 0)
 	{
 		reads = read(fd, buffer, BUFFER_SIZE);
@@ -23,19 +35,20 @@ char *ft_read_line(char *buf, int fd)
 			return (free(buf), free(buffer), NULL);
 		buffer[reads] = '\0';
 		buf = ft_strjoin_gnl(buf, buffer);
+		if (!buf)
+			return (free(buffer), NULL);
 	}
-	free(buffer);
-	return (buf);
+	return (free(buffer), buf);
 }
 
-char *ft_get_line(char *dst)
+char	*ft_get_line(char *dst)
 {
-	size_t i;
-	char *ret;
+	size_t	i;
+	char	*ret;
 
 	i = 0;
 	if (!dst[i])
-		return  (NULL); // free dst
+		return (NULL);
 	while (dst[i] && dst[i] != '\n')
 		i++;
 	if (dst[i] == '\n')
@@ -55,11 +68,11 @@ char *ft_get_line(char *dst)
 	return (ret);
 }
 
-char *ft_get_left_line(char *dst)
+char	*ft_get_left_line(char *dst)
 {
-	size_t i;
-	size_t j;
-	char *ret;
+	size_t	i;
+	size_t	j;
+	char	*ret;
 
 	i = 0;
 	while (dst[i] && dst[i] != '\n')
@@ -79,10 +92,10 @@ char *ft_get_left_line(char *dst)
 	return (ret);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *buf;
-	char *ret;
+	static char	*buf;
+	char		*ret;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
@@ -90,6 +103,12 @@ char *get_next_line(int fd)
 	if (!buf)
 		return (NULL);
 	ret = ft_get_line(buf);
+	if (!ret)
+	{
+		free(buf);
+		buf = NULL;
+		return (NULL);
+	}
 	buf = ft_get_left_line(buf);
 	return (ret);
 }

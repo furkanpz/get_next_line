@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fuyar <fuyar@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/08 16:44:29 by fuyar             #+#    #+#             */
+/*   Updated: 2024/11/08 16:45:55 by fuyar            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-size_t ft_strlen_gnl(char *str)
+size_t	ft_strlen_gnl(char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (!str)
@@ -12,9 +24,9 @@ size_t ft_strlen_gnl(char *str)
 	return (i);
 }
 
-char *ft_strchr_gnl(char *str, char c)
+char	*ft_strchr_gnl(char *str, char c)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (!str)
@@ -28,15 +40,15 @@ char *ft_strchr_gnl(char *str, char c)
 	return (NULL);
 }
 
-char *ft_strjoin_gnl(char *s1, char *s2)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
-	size_t i;
-	size_t j;
-	char *ret;
+	size_t	i;
+	size_t	j;
+	char	*ret;
 
 	ret = malloc(sizeof(char) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
 	if (!ret)
-		return (NULL);
+		return (free(s1), NULL);
 	i = 0;
 	while (s1[i])
 	{
